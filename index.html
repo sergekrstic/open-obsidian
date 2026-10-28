@@ -23,11 +23,14 @@
 <script>
   // Turns https://sergekrstic.github.io/open-obsidian/?f=<path> into obsidian://open?vault=…&file=<path>
   // Only ever builds obsidian://open links. Optional v=<vault name>.
+  // Opens in a new tab by default; p=same reuses the current tab, p=split or p=window also work.
   var q = new URLSearchParams(location.search);
   var file = q.get("f") || "";
   var vault = q.get("v") || "Serge's Ideaverse";
+  var pane = q.get("p") || "tab";
   var url = "obsidian://open?vault=" + encodeURIComponent(vault) +
-            (file ? "&file=" + encodeURIComponent(file) : "");
+            (file ? "&file=" + encodeURIComponent(file) : "") +
+            (pane === "same" ? "" : "&paneType=" + encodeURIComponent(pane));
   document.getElementById("go").href = url;
   document.getElementById("note").textContent = file || vault;
   location.href = url;
